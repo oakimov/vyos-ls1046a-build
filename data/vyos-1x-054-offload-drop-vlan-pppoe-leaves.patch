@@ -189,7 +189,7 @@ index ba98e6ce8..e25880c99 100644
      if 'member' in bridge:
          if 'interface_remove' in bridge['member']:
 diff --git a/src/conf_mode/interfaces_ethernet.py b/src/conf_mode/interfaces_ethernet.py
-index e473e14b0..c39b9dfa8 100644
+index ba7b3cf38..79c8eb974 100644
 --- a/src/conf_mode/interfaces_ethernet.py
 +++ b/src/conf_mode/interfaces_ethernet.py
 @@ -417,30 +417,6 @@ def verify_offload(ethernet: dict, ethtool: Ethtool):
@@ -223,7 +223,7 @@ index e473e14b0..c39b9dfa8 100644
          # ASK offload MTU must stay in [ASK_OFFLOAD_MTU_MIN, ASK_OFFLOAD_MTU_MAX]
          # (1280..9000, HW-validated 2026-10-31 via Option B RX scatter-gather).
          # The DPAA1 RX pool remains order-0 / 4 KiB (F-222); frames above one
-@@ -460,7 +436,7 @@ def verify_offload(ethernet: dict, ethtool: Ethtool):
+@@ -457,7 +433,7 @@ def verify_offload(ethernet: dict, ethtool: Ethtool):
                      f'{ASK_OFFLOAD_MTU_MIN} and {ASK_OFFLOAD_MTU_MAX} '
                      f'(configured MTU {mtu} is outside the validated ASK '
                      f'offload range). Set a supported MTU '

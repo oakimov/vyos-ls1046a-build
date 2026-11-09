@@ -1,5 +1,5 @@
 diff --git a/data/config-mode-dependencies/vyos-1x.json b/data/config-mode-dependencies/vyos-1x.json
-index dd3d28d..e45bf60 100644
+index c07267b7c..c41e8ba9b 100644
 --- a/data/config-mode-dependencies/vyos-1x.json
 +++ b/data/config-mode-dependencies/vyos-1x.json
 @@ -73,6 +73,7 @@
@@ -11,7 +11,7 @@ index dd3d28d..e45bf60 100644
          "vxlan": ["interfaces_vxlan"]
      },
 diff --git a/data/templates/conntrack/nftables-ct.j2 b/data/templates/conntrack/nftables-ct.j2
-index a834c7f..17ccaab 100644
+index a8b36c04e..2a5ed43df 100644
 --- a/data/templates/conntrack/nftables-ct.j2
 +++ b/data/templates/conntrack/nftables-ct.j2
 @@ -50,6 +50,9 @@ table ip vyos_conntrack {
@@ -34,7 +34,7 @@ index a834c7f..17ccaab 100644
          counter jump VYOS_CT_IGNORE
          ct state untracked accept
          counter jump FW_CONNTRACK
-@@ -152,6 +158,9 @@ table ip6 vyos_conntrack {
+@@ -151,6 +157,9 @@ table ip6 vyos_conntrack {
  
      chain PREROUTING {
          type filter hook prerouting priority -300; policy accept;
@@ -44,7 +44,7 @@ index a834c7f..17ccaab 100644
          counter jump VYOS_CT_IGNORE
          ct state untracked accept
          counter jump FW_CONNTRACK
-@@ -169,6 +178,9 @@ table ip6 vyos_conntrack {
+@@ -168,6 +177,9 @@ table ip6 vyos_conntrack {
  
      chain OUTPUT {
          type filter hook output priority -300; policy accept;
@@ -55,10 +55,10 @@ index a834c7f..17ccaab 100644
          ct state untracked accept
          counter jump FW_CONNTRACK
 diff --git a/interface-definitions/system_conntrack.xml.in b/interface-definitions/system_conntrack.xml.in
-index 733a4a4..be96d66 100644
+index 8e605e17e..c9134bd95 100644
 --- a/interface-definitions/system_conntrack.xml.in
 +++ b/interface-definitions/system_conntrack.xml.in
-@@ -320,6 +320,12 @@
+@@ -258,6 +258,12 @@
                </leafNode>
              </children>
            </node>
@@ -72,10 +72,10 @@ index 733a4a4..be96d66 100644
              <properties>
                <help>Size of connection tracking table</help>
 diff --git a/src/conf_mode/interfaces_wireguard.py b/src/conf_mode/interfaces_wireguard.py
-index 850c66a..8d7e7c4 100755
+index 6c1c48e1d..e8c394383 100644
 --- a/src/conf_mode/interfaces_wireguard.py
 +++ b/src/conf_mode/interfaces_wireguard.py
-@@ -89,6 +89,10 @@ def get_config(config=None):
+@@ -87,6 +87,10 @@ def get_config(config=None):
          wireguard['prev_fwmark'] = prev.get('fwmark')
          wireguard['prev_vrf'] = prev.get('vrf')
  
@@ -87,10 +87,10 @@ index 850c66a..8d7e7c4 100755
      if is_vrf_changed(conf, ifname):
          set_dependents('firewall', conf)
 diff --git a/src/conf_mode/system_conntrack.py b/src/conf_mode/system_conntrack.py
-index 559aebc..89b9f57 100755
+index cf1e503c0..419ff4860 100644
 --- a/src/conf_mode/system_conntrack.py
 +++ b/src/conf_mode/system_conntrack.py
-@@ -105,6 +105,22 @@ def get_config(config=None):
+@@ -103,6 +103,22 @@ def get_config(config=None):
  
      conntrack['module_map'] = module_map
  

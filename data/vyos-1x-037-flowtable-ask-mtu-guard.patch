@@ -1,9 +1,9 @@
 
 diff --git a/src/conf_mode/firewall.py b/src/conf_mode/firewall.py
-index cc58ead..da385b0 100755
+index 45837ba8b..7de7363c8 100644
 --- a/src/conf_mode/firewall.py
 +++ b/src/conf_mode/firewall.py
-@@ -511,6 +511,28 @@ def verify_hardware_offload(ifname):
+@@ -525,6 +525,28 @@ def verify_hardware_offload(ifname):
      if not enabled and fixed:
          raise ConfigError(f'Interface "{ifname}" does not support hardware offload')
  

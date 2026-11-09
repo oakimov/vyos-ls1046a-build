@@ -1,8 +1,8 @@
 diff --git a/src/conf_mode/firewall.py b/src/conf_mode/firewall.py
-index da385b0..e1f2a3c 100755
+index 7de7363c8..5f6fec8d3 100644
 --- a/src/conf_mode/firewall.py
 +++ b/src/conf_mode/firewall.py
-@@ -527,6 +527,44 @@ def verify(firewall):
+@@ -567,8 +567,46 @@ def verify(firewall):
  
                  for ifname in interfaces:
                      verify_hardware_offload(ifname)
@@ -48,3 +48,4 @@ index da385b0..e1f2a3c 100755
      if dict_search_args(firewall, 'global_options', 'geoip', 'provider') == 'maxmind':
          geoip_options = dict_search_args(firewall, 'global_options', 'geoip')
          required_keys = ['maxmind_account_id', 'maxmind_license_key']
+         if not all(key in geoip_options for key in required_keys):

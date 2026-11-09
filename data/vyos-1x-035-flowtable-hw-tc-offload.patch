@@ -29,10 +29,10 @@ switches the feature on directly via `ethtool -K` for the same reason):
    without NETIF_F_HW_TC).
 
 diff --git a/src/conf_mode/firewall.py b/src/conf_mode/firewall.py
-index 32356f6..6d74f78 100644
+index 8fa8fd247..45837ba8b 100644
 --- a/src/conf_mode/firewall.py
 +++ b/src/conf_mode/firewall.py
-@@ -511,8 +511,11 @@ def verify_hardware_offload(ifname):
+@@ -525,8 +525,11 @@ def verify_hardware_offload(ifname):
      if not enabled and fixed:
          raise ConfigError(f'Interface "{ifname}" does not support hardware offload')
  
@@ -46,7 +46,7 @@ index 32356f6..6d74f78 100644
  
  def verify(firewall):
      if 'flowtable' in firewall:
-@@ -751,6 +754,18 @@ def parse_firewall_error(output):
+@@ -765,6 +768,18 @@ def parse_firewall_error(output):
      raise ConfigError('\n'.join(error_output))
  
  def apply(firewall):

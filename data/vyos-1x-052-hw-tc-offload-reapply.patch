@@ -25,9 +25,10 @@ Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01GooC2zFmzRBYLikPbwekuH
 ---
 diff --git a/python/vyos/ifconfig/ethernet.py b/python/vyos/ifconfig/ethernet.py
+index aabf4fe11..6257f90c9 100644
 --- a/python/vyos/ifconfig/ethernet.py
 +++ b/python/vyos/ifconfig/ethernet.py
-@@ -395,8 +395,26 @@
+@@ -394,10 +394,28 @@ def set_ask_offload(self, family_mask: int, vlan: bool = False, bridge: bool = F
  
          tool = '/usr/local/bin/vyos-offload-ask'
          if not os.path.exists(tool):
@@ -54,7 +55,11 @@ diff --git a/python/vyos/ifconfig/ethernet.py b/python/vyos/ifconfig/ethernet.py
          # `family <mask> [vlan] [bridge]` sets the per-port family mask and,
          # when the port stays engaged (mask != 0), the per-port VLAN and
          # bridge bits in one engage. A disengaging call (mask 0) drops the
-@@ -468,8 +486,18 @@ def set_ingress_policer(self, config):
+         # port entirely; the kernel disengage path also disarms both bits,
+         # so no explicit vlan/bridge arg is needed there.
+@@ -477,12 +495,22 @@ def set_ingress_policer(self, config):
+         self._popen(f'tc filter del dev {ifname} parent ffff: pref {pref} 2>/dev/null')
+ 
          policer = config.get('ingress_policer')
          if not policer:
              # No policer configured: return hw-tc-offload to its default-off
@@ -75,3 +80,5 @@ diff --git a/python/vyos/ifconfig/ethernet.py b/python/vyos/ifconfig/ethernet.py
              return None
  
          rate = policer.get('bandwidth')
+         if not rate:
+             return None

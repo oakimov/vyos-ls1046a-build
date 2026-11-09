@@ -8,10 +8,10 @@ Subject: [PATCH] temp: vyos-1x-018-fix-partition-mount-iso9660.patch
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/python/vyos/system/disk.py b/python/vyos/system/disk.py
-index 359afa2..c5287bc 100644
+index 5cfae8353..dcc365458 100644
 --- a/python/vyos/system/disk.py
 +++ b/python/vyos/system/disk.py
-@@ -171,7 +171,7 @@ def partition_mount(partition: str,
+@@ -323,7 +323,7 @@ def partition_mount(partition: str,
      """
      if fsype in ['squashfs', 'iso9660']:
          command: str = f'mount -o loop,ro -t {fsype} {partition} {path}'

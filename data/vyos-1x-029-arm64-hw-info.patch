@@ -45,9 +45,9 @@ index 50359ddf6..35bb03624 100644
 +            version_data['hardware_model'] = _arm64_dt_model()
 +            version_data['hardware_serial'] = _arm64_board_serial()
 +            version_data['hardware_uuid'] = _arm64_lowest_mac_uuid()
-
+ 
      return version_data
-
+ 
 +def _arm64_dt_model():
 +    """Board model string from the devicetree (no DMI on ARM64)."""
 +    return read_file('/proc/device-tree/model', 'Unknown').rstrip('\x00')

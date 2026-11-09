@@ -15,7 +15,7 @@ change to what this patch adds -- context only.
  3 files changed, 121 insertions(+)
 
 diff --git a/interface-definitions/interfaces_ethernet.xml.in b/interface-definitions/interfaces_ethernet.xml.in
-index e110bd48f..b7df88fab 100644
+index 507c3997b..a0d311bee 100644
 --- a/interface-definitions/interfaces_ethernet.xml.in
 +++ b/interface-definitions/interfaces_ethernet.xml.in
 @@ -139,6 +139,96 @@
@@ -116,7 +116,7 @@ index e110bd48f..b7df88fab 100644
              <properties>
                <help>Link speed</help>
 diff --git a/python/vyos/ethtool.py b/python/vyos/ethtool.py
-index 66dc6bb89..9cb15c2cd 100644
+index f476c6835..05b14e544 100644
 --- a/python/vyos/ethtool.py
 +++ b/python/vyos/ethtool.py
 @@ -184,6 +184,9 @@ def get_scatter_gather(self):
@@ -130,10 +130,10 @@ index 66dc6bb89..9cb15c2cd 100644
          # Configuration of RX/TX ring-buffers is not supported on every device,
          # thus when it's impossible return None
 diff --git a/python/vyos/ifconfig/ethernet.py b/python/vyos/ifconfig/ethernet.py
-index ab5c8a0b8..ddb792b5d 100644
+index 60a3ce7a3..051c15c94 100644
 --- a/python/vyos/ifconfig/ethernet.py
 +++ b/python/vyos/ifconfig/ethernet.py
-@@ -80,6 +80,10 @@ def feature(ifname, option, value):
+@@ -83,6 +83,10 @@ def feature(ifname, option, value):
                  'validate': lambda v: assert_list(v, ['on', 'off']),
                  'possible': lambda i, v: EthernetIf.feature(i, 'tso', v),
              },
@@ -144,7 +144,7 @@ index ab5c8a0b8..ddb792b5d 100644
          },
      }
  
-@@ -345,6 +349,30 @@ def set_lro(self, state, warn=True):
+@@ -374,6 +378,30 @@ def set_lro(self, state, warn=True):
              'lro', 'large-receive-offload', state, enabled, fixed, warn
          )
  

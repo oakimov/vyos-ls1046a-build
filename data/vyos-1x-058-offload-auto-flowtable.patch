@@ -1,5 +1,5 @@
 diff --git a/data/templates/firewall/nftables-offload.j2 b/data/templates/firewall/nftables-offload.j2
-index a893e05..24460f2 100644
+index a893e05b2..3ade536c4 100644
 --- a/data/templates/firewall/nftables-offload.j2
 +++ b/data/templates/firewall/nftables-offload.j2
 @@ -7,3 +7,23 @@
@@ -27,7 +27,7 @@ index a893e05..24460f2 100644
 +    }
 +{% endmacro %}
 diff --git a/data/templates/firewall/nftables.j2 b/data/templates/firewall/nftables.j2
-index 6b93584..17cd37e 100755
+index 6b9358406..17cd37e17 100755
 --- a/data/templates/firewall/nftables.j2
 +++ b/data/templates/firewall/nftables.j2
 @@ -229,6 +229,9 @@ table ip vyos_filter {
@@ -51,10 +51,10 @@ index 6b93584..17cd37e 100755
  
  ## Bridge Firewall
 diff --git a/src/conf_mode/firewall.py b/src/conf_mode/firewall.py
-index 0f5459f..dc524f6 100755
+index 453f1160f..286937b5c 100644
 --- a/src/conf_mode/firewall.py
 +++ b/src/conf_mode/firewall.py
-@@ -126,6 +126,33 @@ def generate_inet_proto_keymap(firewall):
+@@ -124,6 +124,33 @@ def generate_inet_proto_keymap(firewall):
  
      firewall['inet_proto_map'] = keymap
  
@@ -88,7 +88,7 @@ index 0f5459f..dc524f6 100755
  def get_config(config=None):
      if config:
          conf = config
-@@ -178,6 +205,8 @@ def get_config(config=None):
+@@ -176,6 +203,8 @@ def get_config(config=None):
  
      set_dependents('conntrack', conf)
  
@@ -97,7 +97,7 @@ index 0f5459f..dc524f6 100755
      return firewall
  
  def verify_jump_target(firewall, hook, jump_target, family, recursive=False):
-@@ -582,6 +611,10 @@ def verify_hardware_offload(ifname):
+@@ -576,6 +605,10 @@ def verify_hardware_offload(ifname):
      # a toggleable-but-off state here is not an error.
  
  def verify(firewall):
@@ -108,7 +108,7 @@ index 0f5459f..dc524f6 100755
      if 'flowtable' in firewall:
          for flowtable, flowtable_conf in firewall['flowtable'].items():
              if 'interface' not in flowtable_conf:
-@@ -877,6 +910,9 @@ def apply(firewall):
+@@ -871,6 +904,9 @@ def apply(firewall):
                      hardware_ifname = get_hardware_offload_interface(ifname)
                      cmdl(['ethtool', '-K', hardware_ifname, 'hw-tc-offload', 'on'])
  
@@ -119,10 +119,10 @@ index 0f5459f..dc524f6 100755
      completed_process = subp_run(['nft', '-c', '--file', nftables_conf], capture_output=True)
      install_result = completed_process.returncode
 diff --git a/src/conf_mode/interfaces_ethernet.py b/src/conf_mode/interfaces_ethernet.py
-index 5bcfb90..ac1ac15 100755
+index 79c8eb974..534119df0 100644
 --- a/src/conf_mode/interfaces_ethernet.py
 +++ b/src/conf_mode/interfaces_ethernet.py
-@@ -260,6 +260,10 @@ def get_config(config=None):
+@@ -258,6 +258,10 @@ def get_config(config=None):
      )
      if tmp:
          ethernet.update({'offload_changed': tmp})
@@ -134,10 +134,10 @@ index 5bcfb90..ac1ac15 100755
      for node, key in {
          'disable-flow-control': 'flow_control_changed',
 diff --git a/src/conf_mode/system_conntrack.py b/src/conf_mode/system_conntrack.py
-index 76c56d8..a39923d 100755
+index 419ff4860..a639013c3 100644
 --- a/src/conf_mode/system_conntrack.py
 +++ b/src/conf_mode/system_conntrack.py
-@@ -105,6 +105,24 @@ def get_config(config=None):
+@@ -103,6 +103,24 @@ def get_config(config=None):
  
      conntrack['module_map'] = module_map
  
@@ -162,7 +162,7 @@ index 76c56d8..a39923d 100755
      # WireGuard data packets are encrypted and never offloaded, so tracking
      # the outer UDP flow only costs cycles (conntrack, helper and firewall
      # chains on every packet of the serial tx/rx stage). Skip tracking for the
-@@ -216,6 +234,9 @@ def generate(conntrack):
+@@ -214,6 +232,9 @@ def generate(conntrack):
                  elif path[0] == 'ipv6':
                      conntrack['ipv6_firewall_action'] = 'accept'
  

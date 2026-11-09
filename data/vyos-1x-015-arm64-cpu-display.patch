@@ -8,7 +8,7 @@ Subject: [PATCH] temp: vyos-1x-015-arm64-cpu-display.patch
  1 file changed, 81 insertions(+), 8 deletions(-)
 
 diff --git a/src/op_mode/cpu.py b/src/op_mode/cpu.py
-index 07cb901..7ec34c5 100755
+index 07cb90187..7ec34c54c 100755
 --- a/src/op_mode/cpu.py
 +++ b/src/op_mode/cpu.py
 @@ -22,13 +22,53 @@

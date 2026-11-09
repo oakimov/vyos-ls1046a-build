@@ -41,10 +41,10 @@ hunks that genuinely modify pre-existing upstream files: wiring the /mcp/
 route into nginx + the CLI schema + SessionState + the FastAPI app.
 ---
 diff --git a/data/templates/https/nginx.default.j2 b/data/templates/https/nginx.default.j2
-index 0f1a79ad7..7044867198 100644
+index 49134d5ab..f6c39095f 100644
 --- a/data/templates/https/nginx.default.j2
 +++ b/data/templates/https/nginx.default.j2
-@@ -55,7 +55,7 @@
+@@ -55,7 +55,7 @@ server {
      ssl_verify_depth 2;
  {% endif %}
      # proxy settings for HTTP API, if enabled; 503, if not
@@ -101,7 +101,7 @@ diff --git a/src/services/api/session.py b/src/services/api/session.py
 index c1eb534d8..cf65edffc 100644
 --- a/src/services/api/session.py
 +++ b/src/services/api/session.py
-@@ -45,3 +45,6 @@
+@@ -45,3 +45,6 @@ def _initialize(self):
          self.oidc_issuer = None
          self.oidc_jwks_uri = None
          self.oidc_audience = None
@@ -109,13 +109,13 @@ index c1eb534d8..cf65edffc 100644
 +        self.mcp_mode = 'read-only'
 +        self.mcp_introspection = False
 diff --git a/src/services/vyos-http-api-server b/src/services/vyos-http-api-server
-index 6a420f499..aac536e46 100644
+index c839dbd88..bedfaa409 100755
 --- a/src/services/vyos-http-api-server
 +++ b/src/services/vyos-http-api-server
-@@ -231,6 +231,15 @@
+@@ -242,6 +242,15 @@ def initialization(session: SessionState, app: FastAPI = app):
      else:
          session.graphql = False
-
+ 
 +    # parse the mcp block from api_config_state into SessionState
 +    mcp_config = server_config.get('mcp', {})
 +    if 'mcp' in server_config:
@@ -127,11 +127,11 @@ index 6a420f499..aac536e46 100644
 +
      # pass session state
      app.state = session
-
-@@ -250,6 +259,14 @@
+ 
+@@ -261,6 +270,14 @@ def initialization(session: SessionState, app: FastAPI = app):
          from api.graphql.routers import graphql_clear
          graphql_clear(app)
-
+ 
 +    # add MCP route
 +    if session.mcp:
 +        from api.mcp.routers import mcp_init
@@ -141,5 +141,5 @@ index 6a420f499..aac536e46 100644
 +        mcp_clear(app)
 +
      regenerate_docs(app)
-
+ 
      LOG.debug('Active routes are:')

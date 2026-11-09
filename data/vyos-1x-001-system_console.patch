@@ -9,7 +9,7 @@ Subject: [PATCH] temp: vyos-1x-001-system_console.patch
  2 files changed, 20 insertions(+), 7 deletions(-)
 
 diff --git a/interface-definitions/system_console.xml.in b/interface-definitions/system_console.xml.in
-index 8ae9829..043ad83 100644
+index 8ae98291e..043ad837a 100644
 --- a/interface-definitions/system_console.xml.in
 +++ b/interface-definitions/system_console.xml.in
 @@ -12,7 +12,7 @@
@@ -65,10 +65,10 @@ index 8ae9829..043ad83 100644
                  </properties>
                  <defaultValue>115200</defaultValue>
 diff --git a/src/conf_mode/system_console.py b/src/conf_mode/system_console.py
-index 22a4a37..fbf96c0 100755
+index a7d6d268d..a1d9d80d2 100644
 --- a/src/conf_mode/system_console.py
 +++ b/src/conf_mode/system_console.py
-@@ -136,14 +136,19 @@ def apply(console):
+@@ -134,14 +134,19 @@ def apply(console):
      # Reset screen blanking
      call('/usr/bin/setterm -blank 0 -powersave off -powerdown 0 -term linux </dev/tty1 >/dev/tty1 2>&1')
  

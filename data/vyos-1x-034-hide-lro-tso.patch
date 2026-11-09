@@ -1,7 +1,10 @@
 diff --git a/interface-definitions/interfaces_ethernet.xml.in b/interface-definitions/interfaces_ethernet.xml.in
+index 0706424b1..9a8c9d1e2 100644
 --- a/interface-definitions/interfaces_ethernet.xml.in
 +++ b/interface-definitions/interfaces_ethernet.xml.in
-@@ -110,18 +110,12 @@
+@@ -108,22 +108,16 @@
+                 </properties>
+               </leafNode>
                <leafNode name="ipv6">
                  <properties>
                    <help>ASK2 hardware offload for IPv6 forwarded flows (NXP LS1046A FMan FE-VM)</help>
@@ -20,7 +23,11 @@ diff --git a/interface-definitions/interfaces_ethernet.xml.in b/interface-defini
                    <valueless/>
                  </properties>
                </leafNode>
-@@ -140,18 +134,12 @@
+               <leafNode name="rx">
+                 <properties>
+@@ -138,22 +132,16 @@
+                 </properties>
+               </leafNode>
                <leafNode name="sg">
                  <properties>
                    <help>Enable Scatter-Gather</help>
@@ -39,3 +46,5 @@ diff --git a/interface-definitions/interfaces_ethernet.xml.in b/interface-defini
              <properties>
                <help>Hardware ingress rate policer (NXP LS1046A FMan Policer offload)</help>
              </properties>
+             <children>
+               <leafNode name="bandwidth">

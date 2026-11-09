@@ -1,8 +1,8 @@
 diff --git a/python/vyos/ifconfig/ethernet.py b/python/vyos/ifconfig/ethernet.py
-index 8e104bd98..d3698cd16 100644
+index c7bccf50f..aabf4fe11 100644
 --- a/python/vyos/ifconfig/ethernet.py
 +++ b/python/vyos/ifconfig/ethernet.py
-@@ -337,7 +337,7 @@ def set_hw_tc_offload(self, state, warn=True):
+@@ -366,7 +366,7 @@ def set_hw_tc_offload(self, state, warn=True):
              'hw-tc-offload', 'hw-tc-offload', state, enabled, fixed, warn
          )
  
@@ -11,7 +11,7 @@ index 8e104bd98..d3698cd16 100644
          """
          Apply per-interface ASK2 family selection. bit0=IPv4, bit1=IPv6;
          mask 0 disengages the port. The kernel scheme/table is family-neutral;
-@@ -346,6 +346,13 @@ def set_ask_offload(self, family_mask: int, vlan: bool = False):
+@@ -375,6 +375,13 @@ def set_ask_offload(self, family_mask: int, vlan: bool = False):
          @vlan arms this port's single-tag 802.1Q VLAN pop/push offload
          (CLI `offload vlan`), carried to ask.ko as the genl ASK_ATTR_VLAN
          bit alongside the family mask so both are set atomically on engage.
@@ -25,7 +25,7 @@ index 8e104bd98..d3698cd16 100644
          """
          # Physical ingress FMan hwport IDs (DT-authoritative, all five ports).
          port_map = {
-@@ -360,14 +367,14 @@ def set_ask_offload(self, family_mask: int, vlan: bool = False):
+@@ -389,14 +396,14 @@ def set_ask_offload(self, family_mask: int, vlan: bool = False):
          if not os.path.exists(tool):
              raise ConfigError(f'ASK offload helper not found: {tool}')
  
@@ -46,7 +46,7 @@ index 8e104bd98..d3698cd16 100644
          out, rc = self._popen(cmd)
          if rc:
              msg = (out or '').strip().splitlines()
-@@ -740,7 +747,16 @@ def update(self, config):
+@@ -769,7 +776,16 @@ def update(self, config):
          # require ipv4 or ipv6). Passed with the family mask so ask.ko arms
          # both atomically; ignored by the helper on a disengaging (mask 0) call.
          ask_vlan = dict_search('offload.vlan', config) is not None
@@ -65,10 +65,10 @@ index 8e104bd98..d3698cd16 100644
          # RPS - Receive Packet Steering
          # ASK's IPv6/NAT/VLAN misses take the kernel RX softirq path; on this
 diff --git a/src/conf_mode/interfaces_bridge.py b/src/conf_mode/interfaces_bridge.py
-index 5e24b89..e599993 100755
+index e25880c99..71d958910 100644
 --- a/src/conf_mode/interfaces_bridge.py
 +++ b/src/conf_mode/interfaces_bridge.py
-@@ -28,6 +28,7 @@ from vyos.configverify import verify_mirror_redirect
+@@ -26,6 +26,7 @@
  from vyos.configverify import verify_vrf
  from vyos.configverify import verify_mtu_ipv6
  from vyos.ifconfig import BridgeIf
@@ -76,10 +76,10 @@ index 5e24b89..e599993 100755
  from vyos.configdict import has_address_configured
  from vyos.configdict import has_vrf_configured
  from vyos.configdep import set_dependents
-@@ -217,6 +218,47 @@ def verify(bridge):
+@@ -215,6 +216,47 @@ def verify(bridge):
  def generate(bridge):
      return None
-
+ 
 +def apply_ask_bridge_offload(bridge, conf):
 +    """
 +    T-M6-2: L2 bridge FDB hardware offload has no CLI leafNode of its own --
@@ -124,10 +124,10 @@ index 5e24b89..e599993 100755
  def apply(bridge):
      br = BridgeIf(bridge['ifname'])
      if 'deleted' in bridge:
-@@ -225,6 +267,8 @@ def apply(bridge):
+@@ -223,6 +265,8 @@ def apply(bridge):
      else:
          br.update(bridge)
-
+ 
 +    apply_ask_bridge_offload(bridge, Config())
 +
      tmp = []

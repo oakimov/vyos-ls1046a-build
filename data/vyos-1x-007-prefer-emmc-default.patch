@@ -8,10 +8,10 @@ Subject: [PATCH] temp: vyos-1x-007-prefer-emmc-default.patch
  1 file changed, 5 insertions(+)
 
 diff --git a/src/op_mode/image_installer.py b/src/op_mode/image_installer.py
-index ea5aed0..f2715c0 100755
+index 6cf132c42..cf077cecc 100755
 --- a/src/op_mode/image_installer.py
 +++ b/src/op_mode/image_installer.py
-@@ -396,6 +396,11 @@ def ask_single_disk(disks_available: dict[str, int]) -> str:
+@@ -423,6 +423,11 @@ def ask_single_disk(disks_available: dict[str, int]) -> str:
      """
      print(MSG_INFO_INSTALL_DISKS_LIST)
      default_disk: str = list(disks_available)[0]

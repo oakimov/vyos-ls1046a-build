@@ -1,4 +1,5 @@
 diff --git a/op-mode-definitions/show-interfaces-ethernet.xml.in b/op-mode-definitions/show-interfaces-ethernet.xml.in
+index 08da21a47..3140f6604 100644
 --- a/op-mode-definitions/show-interfaces-ethernet.xml.in
 +++ b/op-mode-definitions/show-interfaces-ethernet.xml.in
 @@ -47,12 +47,32 @@

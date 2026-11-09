@@ -1,7 +1,8 @@
 diff --git a/src/op_mode/image_installer.py b/src/op_mode/image_installer.py
+index a6f5eae64..f8d113a3d 100755
 --- a/src/op_mode/image_installer.py
 +++ b/src/op_mode/image_installer.py
-@@ -1423,16 +1423,35 @@ def add_image(image_path: str, vrf: str = None, username: str = '',
+@@ -1486,16 +1486,35 @@ def add_image(image_path: str, vrf: str = None, username: str = '',
          copy(f'{DIR_ISO_MOUNT}/live/filesystem.squashfs',
               f'{root_dir}/boot/{image_name}/{image_name}.squashfs')
  

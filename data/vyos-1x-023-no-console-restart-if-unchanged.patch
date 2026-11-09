@@ -1,8 +1,8 @@
 diff --git a/src/conf_mode/system_console.py b/src/conf_mode/system_console.py
-index fbf96c0a4..29356b792 100755
+index a1d9d80d2..1756829a0 100644
 --- a/src/conf_mode/system_console.py
 +++ b/src/conf_mode/system_console.py
-@@ -23,13 +23,55 @@
+@@ -21,13 +21,55 @@
  from vyos.utils.serial import restart_login_consoles
  from vyos.utils.serial import is_tty
  from vyos.system import grub_util
@@ -59,7 +59,7 @@ index fbf96c0a4..29356b792 100755
  def get_config(config=None):
      if config:
          conf = config
-@@ -83,15 +125,33 @@ def verify(console):
+@@ -81,15 +123,33 @@ def verify(console):
  
  def generate(console):
      base_dir = '/run/systemd/system'
@@ -98,7 +98,7 @@ index fbf96c0a4..29356b792 100755
          grub_util.update_serial_console(*default_tty_console)
          return None
  
-@@ -112,6 +172,7 @@ def generate(console):
+@@ -110,6 +170,7 @@ def generate(console):
              else:
                  raise ConfigError(f'Device {device} does not support being used as tty')
  
@@ -106,7 +106,7 @@ index fbf96c0a4..29356b792 100755
      for device, device_config in console['device'].items():
          # Do not render getty configuration if specified device is not a TTY.
          if not is_tty(device):
-@@ -119,9 +180,28 @@ def generate(console):
+@@ -117,9 +178,28 @@ def generate(console):
          config_file = base_dir + f'/serial-getty@{device}.service'
          Path(f'{base_dir}/getty.target.wants').mkdir(exist_ok=True)
          getty_wants_symlink = base_dir + f'/getty.target.wants/serial-getty@{device}.service'
@@ -137,7 +137,7 @@ index fbf96c0a4..29356b792 100755
  
          if 'kernel' in device_config:
              # get console type ("ttyS" or "ttyAMA") from device (e.g. "ttyS0")
-@@ -129,6 +209,18 @@ def generate(console):
+@@ -127,6 +207,18 @@ def generate(console):
              console_num = device[len(console_type):]
              default_tty_console = (console_type, console_num, device_config['speed'])
  
@@ -156,7 +156,7 @@ index fbf96c0a4..29356b792 100755
      grub_util.update_serial_console(*default_tty_console)
      return None
  
-@@ -147,7 +239,15 @@ def apply(console):
+@@ -145,7 +237,15 @@ def apply(console):
      # Service control moved to vyos.utils.serial to unify checks and prompts.
      # If users are connected, we want to show an informational message on completing
      # the process, but not halt configuration processing with an interactive prompt.
@@ -173,7 +173,7 @@ index fbf96c0a4..29356b792 100755
  
      if 'powersave' in console.keys():
          # Configure screen blank powersaving on VGA console
-@@ -163,4 +263,4 @@ def apply(console):
+@@ -161,4 +261,4 @@ def apply(console):
          apply(c)
      except ConfigError as e:
          print(e)

@@ -1,8 +1,9 @@
 diff --git a/src/conf_mode/interfaces_wireguard.py b/src/conf_mode/interfaces_wireguard.py
-index 8d7e7c45d..a470d66b0 100755
+index e8c394383..324978fd0 100644
 --- a/src/conf_mode/interfaces_wireguard.py
 +++ b/src/conf_mode/interfaces_wireguard.py
-@@ -58,4 +58,12 @@ def get_config(config=None):
+@@ -55,6 +55,14 @@ def get_config(config=None):
+     base = ['interfaces', 'wireguard']
      ifname, wireguard = get_interface_dict(conf, base)
  
 +    # LS1046A DPAA WireGuard fast path: implicit, there is no CLI leaf. The
@@ -15,7 +16,9 @@ index 8d7e7c45d..a470d66b0 100755
 +
      # Check if a port was changed
      tmp = is_node_changed(conf, base + [ifname, 'port'])
-@@ -174,7 +182,98 @@ def generate(wireguard):
+     if tmp: wireguard['port_changed'] = {}
+@@ -171,9 +179,100 @@ def generate(wireguard):
+     return None
  
  
 +WGFP_PARAM = '/sys/module/wireguard/parameters/wgfp_peer'
@@ -114,10 +117,13 @@ index 8d7e7c45d..a470d66b0 100755
 +
      wg = WireGuardIf(**wireguard)
  
-@@ -224,4 +323,6 @@ def apply(wireguard):
+     if 'deleted' in wireguard:
+@@ -221,6 +320,8 @@ def apply(wireguard):
+             domain_action = 'stop'
      call(f'systemctl {domain_action} vyos-domain-resolver.service')
  
 +    wgfp_bind(wireguard['wgfp_ifaces'])
 +
      # run the dependents
      call_dependents()
+ 

@@ -8,10 +8,10 @@ Subject: [PATCH] temp: vyos-1x-020-find-persistence-by-label.patch
  1 file changed, 23 insertions(+), 3 deletions(-)
 
 diff --git a/python/vyos/system/disk.py b/python/vyos/system/disk.py
-index 359afa2..62a3f09 100644
+index dcc365458..6b0412593 100644
 --- a/python/vyos/system/disk.py
 +++ b/python/vyos/system/disk.py
-@@ -47,15 +47,35 @@ def disk_cleanup(drive_path: str) -> None:
+@@ -169,15 +169,35 @@ def disk_cleanup(drive_path: str) -> None:
  
  
  def find_persistence() -> str:

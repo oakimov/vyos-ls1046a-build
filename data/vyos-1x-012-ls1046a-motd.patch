@@ -8,7 +8,7 @@ Subject: [PATCH] temp: vyos-1x-012-ls1046a-motd.patch
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/data/templates/login/default_motd.j2 b/data/templates/login/default_motd.j2
-index 0d52092..e396e48 100644
+index 0d52092f8..148186d80 100644
 --- a/data/templates/login/default_motd.j2
 +++ b/data/templates/login/default_motd.j2
 @@ -1,4 +1,4 @@

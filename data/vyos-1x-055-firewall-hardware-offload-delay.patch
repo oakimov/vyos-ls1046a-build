@@ -1,5 +1,5 @@
 diff --git a/interface-definitions/include/firewall/global-options.xml.i b/interface-definitions/include/firewall/global-options.xml.i
-index 4827f6e82..724a79bea 100644
+index 4827f6e82..9cbdcc99b 100644
 --- a/interface-definitions/include/firewall/global-options.xml.i
 +++ b/interface-definitions/include/firewall/global-options.xml.i
 @@ -175,6 +175,19 @@
@@ -23,10 +23,10 @@ index 4827f6e82..724a79bea 100644
        <properties>
          <help>Policy for handling IPv4 packets with source route option</help>
 diff --git a/src/conf_mode/firewall.py b/src/conf_mode/firewall.py
-index 29f4c61e0..3d6ec2ad8 100755
+index 0ac5f168b..453f1160f 100644
 --- a/src/conf_mode/firewall.py
 +++ b/src/conf_mode/firewall.py
-@@ -51,6 +51,7 @@
+@@ -50,6 +50,7 @@
  firewall_config_dir = "/config/firewall"
  
  sysctl_file = r'/run/sysctl/10-vyos-firewall.conf'
@@ -34,7 +34,7 @@ index 29f4c61e0..3d6ec2ad8 100755
  
  valid_groups = [
      'address_group',
-@@ -857,6 +858,14 @@ def parse_firewall_error(output):
+@@ -849,6 +850,14 @@ def parse_firewall_error(output):
      raise ConfigError('\n'.join(error_output))
  
  def apply(firewall):

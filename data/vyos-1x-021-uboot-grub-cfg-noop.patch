@@ -31,9 +31,9 @@ index 40b38b366..5011f6973 100644
 --- a/python/vyos/system/compat.py
 +++ b/python/vyos/system/compat.py
 @@ -30,6 +30,18 @@
-
+ 
  TMPL_GRUB_COMPAT: str = 'grub/grub_compat.j2'
-
+ 
 +# LS1046A / U-Boot boards have no GRUB: /boot/grub/grub.cfg never exists.
 +# Detect once at import time so every grub_cfg_update() call short-circuits
 +# without raising FileNotFoundError from parse_menuentries() / vars_read().
@@ -50,8 +50,8 @@ index 40b38b366..5011f6973 100644
  REGEX_VERSION = r'^menuentry "[^\n]*{\n[^}]*\s+linux /boot/(?P<version>\S+)/[^}]*}'
  REGEX_MENUENTRY = r'^menuentry "[^\n]*{\n[^}]*\s+linux /boot/(?P<version>\S+)/vmlinuz (?P<options>[^\n]+)\n[^}]*}'
 @@ -48,6 +60,10 @@ class DowngradingImageTools(Exception):
-
-
+ 
+ 
  def mode():
 +    # On U-Boot boards (LS1046A) there is no GRUB at all; never enter the
 +    # legacy grub.cfg compat path.
@@ -59,9 +59,9 @@ index 40b38b366..5011f6973 100644
 +        return False
      if grub.get_cfg_ver() >= SYSTEM_CFG_VER:
          return False
-
+ 
 @@ -327,6 +343,9 @@ def grub_cfg_fields(root_dir: str = '') -> dict:
-
+ 
  def render_grub_cfg(root_dir: str = '') -> None:
      """Render grub.cfg for legacy compatibility"""
 +    # U-Boot boards (LS1046A) have no /boot/grub/grub.cfg to render.
@@ -69,4 +69,4 @@ index 40b38b366..5011f6973 100644
 +        return
      if not root_dir:
          root_dir = disk.find_persistence()
-
+ 
