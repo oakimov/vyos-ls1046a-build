@@ -95,6 +95,6 @@ index d8dcf12f8..45a137fd8 100755
 +            )
 +        if ifname == 'eth0':
 +            raise ConfigError('ASK PPPoE offload is not supported on the eth0 management port')
-         # ASK FMan FE forwarding is bounded to the order-0 RX buffer range on
-         # this board. The DPAA1 RX pool is one contiguous 4 KiB order-0 page
-         # (F-222); frames above the ~3600 ceiling overrun the one-buffer FMan
+         # ASK offload MTU must stay in [ASK_OFFLOAD_MTU_MIN, ASK_OFFLOAD_MTU_MAX]
+         # (1280..9000, HW-validated 2026-10-31 via Option B RX scatter-gather).
+         # The DPAA1 RX pool remains order-0 / 4 KiB (F-222); frames above one

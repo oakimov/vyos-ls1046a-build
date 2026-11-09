@@ -1,6 +1,11 @@
 # ASK2 jumbo MTU plan: reach vendor parity (9000+)
 
-Status: **Step 0 passed 2026-10-31; Option B adopted.** Patch 0177 was repaired, built in CI run `41887348300`, and is installed on `.185` in image `2026.11.04-1827` (kernel `6.18.60-vyos`). The board is currently at MTU 1500; the new image's jumbo path and 1500-MTU forwarding regression have not yet been exercised.
+Status: **Option B shipped; GitHub issue #50 closed without page_pool.** Step 0
+passed 2026-10-31. Patch 0177 was repaired (no `dpaa_bp->size` MAC clamp), built
+in CI run `41887348300`, and installed on `.185`. Contiguous jumbo via page_pool
+/ order-N (issue #50 Option A) is explicitly deferred — mainline RX SG plus the
+repaired 0177 already carry MTU 9000 with offload. Remaining matrix soak items
+below are separate follow-ups, not blockers for closing #50.
 
 ### Step 0 result (HW, `.185`, image 2026.10.31-0245, offload engaged, cold-ish boot)
 
